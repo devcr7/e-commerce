@@ -1,0 +1,24 @@
+server:
+  port: 8081
+  shutdown: graceful
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+    info:
+      git:
+        mode: full
+        exposed: true
+        properties:
+          mode: full
+          exposed: true
+
+spring:
+  application:
+    name: catalog-service
+  datasource:
+    url: jdbc:postgresql://localhost:15432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
