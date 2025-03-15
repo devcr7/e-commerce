@@ -1,7 +1,6 @@
 package com.shukldi.catalog_service.domain;
 
 import com.shukldi.catalog_service.ApplicationProperties;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
