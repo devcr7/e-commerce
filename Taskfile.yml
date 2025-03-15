@@ -6,8 +6,6 @@ vars:
   DC_DIR: "deployement/docker-compose"
   INFRA_DC_FILE: "{{.DC_DIR}}/infra.yml"
   APPS_DC_FILE: "{{.DC_DIR}}/apps.yml"
-  MONITORING_DC_FILE: "{{.DC_DIR}}/monitoring.yml"
-  SLEEP_CMD: '{{if eq .GOOS "windows"}}timeout{{else}}sleep{{end}}'
 
 tasks:
   default:
@@ -23,10 +21,10 @@ tasks:
   build:
     cmds:
       - "{{.MVNW}} -pl catalog-service spring-boot:build-image -DskipTests"
-      - "{{.MVNW}} -pl order-service spring-boot:build-image -DskipTests"
-      - "{{.MVNW}} -pl notification-service spring-boot:build-image -DskipTests"
-      - "{{.MVNW}} -pl api-gateway spring-boot:build-image -DskipTests"
-      - "{{.MVNW}} -pl bookstore-webapp spring-boot:build-image -DskipTests"
+#      - "{{.MVNW}} -pl order-service spring-boot:build-image -DskipTests"
+#      - "{{.MVNW}} -pl notification-service spring-boot:build-image -DskipTests"
+#      - "{{.MVNW}} -pl api-gateway spring-boot:build-image -DskipTests"
+#      - "{{.MVNW}} -pl bookstore-webapp spring-boot:build-image -DskipTests"
 
   start_infra:
     cmds:

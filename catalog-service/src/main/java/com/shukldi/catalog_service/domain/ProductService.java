@@ -13,11 +13,15 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final ApplicationProperties applicationProperties;
+
+    public ProductService(ProductRepository productRepository, ApplicationProperties applicationProperties) {
+        this.productRepository = productRepository;
+        this.applicationProperties = applicationProperties;
+    }
 
     public PageResult<Product> getProducts(int pageNo) {
         Sort sort = Sort.by("name").ascending();
@@ -40,7 +44,8 @@ public class ProductService {
     }
 
     public Optional<Product> getProduct(String code) {
-        return productRepository.findByCode(code)
-                .map(ProductMapper::toProduct);
+        return Optional.ofNullable(productRepository.findByCode(code)
+                .map(ProductMapper::toProduct)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with code: " + code)));
     }
 }
