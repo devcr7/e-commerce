@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./catalog-service
+      artifact-id: catalog-service # Define the artifact ID here
     defaults:
       run:
         working-directory: ${{ env.working-directory }}
@@ -40,6 +41,9 @@ jobs:
       - name: Build Docker Image
         run: ./mvnw spring-boot:build-image -DskipTests
 
+      - name: Verify Docker Image
+        run: docker images | grep '${{ secrets.DOCKERHUB_USERNAME }}/micro-p1-${{ env.artifact-id }}'
+
       - name: Publish Docker Image
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/catalog-service:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/micro-p1-${{ env.artifact-id }}:latest
