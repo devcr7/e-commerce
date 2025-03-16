@@ -20,6 +20,25 @@ services:
           limits:
             memory: 512M
 
+  orders-db:
+    image: postgres:16-alpine
+    container_name: orders-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "25432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
@@ -30,3 +49,22 @@ services:
       - "8080:80"
     depends_on:
       - catalog-db
+
+  ecommerce-rabbitMq:
+    image: rabbitmq:3.12.11-management
+    container_name: ecommerce-rabbitMq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+        resources:
+          limits:
+            memory: 512M

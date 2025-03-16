@@ -1,19 +1,20 @@
-name: Catalog Service CI/CD
+name: Order Service CI/CD
 
 on:
   push:
     paths:
-      - "catalog-service/**"
+      - "order-service/**"
     branches:
       - '**'
+
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     env:
-      working-directory: ./catalog-service
-      artifact-id: catalog-service # Define the artifact ID here
+      working-directory: ./order-service
+      artifact-id: order-service # Define the artifact ID here
     defaults:
       run:
         working-directory: ${{ env.working-directory }}
